@@ -44,8 +44,16 @@ const generatePlatformSpecificContentIdeasPrompt = ai.definePrompt({
   output: {schema: GeneratePlatformSpecificContentIdeasOutputSchema},
   prompt: `You are a content creation expert specializing in generating trending content ideas for various platforms in Pakistan.
 
-  Generate 3-5 content ideas tailored for {{platform}} based on the topic: {{topic}}.
-  The ideas should be relevant and engaging for a Pakistani audience. Return the ideas in a numbered list.
+  Generate 3-5 content ideas tailored for {{platform}} based on the topic: '{{topic}}'.
+  The ideas should be relevant and engaging for a Pakistani audience.
+
+  Adhere to the following word count guidelines for each idea:
+  - Blog: A descriptive and engaging headline (10-15 words).
+  - Instagram: A catchy caption starter (15-25 words).
+  - TikTok: A short, viral video concept (under 15 words).
+  - YouTube: A compelling video title (under 15 words).
+  - Facebook: An engaging post idea (20-30 words).
+  - X: A concise tweet idea (under 20 words).
   
   Also, generate 5 relevant hashtags for the topic.
 
