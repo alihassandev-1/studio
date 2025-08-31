@@ -141,7 +141,10 @@ export default function Home() {
     setIdeas([]);
     setHashtags([]);
     try {
-      const result = await generatePlatformSpecificContentIdeas(data);
+      const result = await generatePlatformSpecificContentIdeas({
+        ...data,
+        currentYear,
+      });
       setIdeas(result.ideas);
       setHashtags(result.hashtags || []);
     } catch (error) {

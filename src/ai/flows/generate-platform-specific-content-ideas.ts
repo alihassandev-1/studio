@@ -15,6 +15,7 @@ const GeneratePlatformSpecificContentIdeasInputSchema = z.object({
   platform: z
     .enum(['Blog', 'Instagram', 'TikTok', 'YouTube', 'Facebook', 'X'])
     .describe('The platform to tailor content ideas for.'),
+  currentYear: z.number().describe('The current year.'),
 });
 export type GeneratePlatformSpecificContentIdeasInput = z.infer<
   typeof GeneratePlatformSpecificContentIdeasInputSchema
@@ -45,7 +46,7 @@ const generatePlatformSpecificContentIdeasPrompt = ai.definePrompt({
   prompt: `You are a content creation expert specializing in generating trending content ideas for various platforms in Pakistan.
 
   Generate 3-5 content ideas tailored for {{platform}} based on the topic: '{{topic}}'.
-  The ideas should be relevant and engaging for a Pakistani audience.
+  The ideas should be relevant and engaging for a Pakistani audience. The current year is {{currentYear}}. Avoid referencing past years unless the user's topic explicitly asks for it.
 
   Adhere to the following word count guidelines for each idea:
   - Blog: A descriptive and engaging headline (10-15 words).
