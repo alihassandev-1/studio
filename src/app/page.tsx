@@ -19,17 +19,27 @@ import {
   Sparkles,
   CopyCheck,
   Hash,
+  Search,
+  Target,
+  Globe,
+  Wallet,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 
 const BlogIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M4.5 4.5H19.5V8.5H4.5V4.5Z" fill="#3B82F6"/>
-        <path d="M4.5 10.5H14.5V12.5H4.5V10.5Z" fill="#3B82F6" fillOpacity="0.7"/>
-        <path d="M4.5 14.5H19.5V16.5H4.5V14.5Z" fill="#3B82F6" fillOpacity="0.7"/>
-        <path d="M16 10.5H19.5V12.5H16V10.5Z" fill="#3B82F6" fillOpacity="0.7"/>
-        <path d="M4.5 18.5H14.5V20.5H4.5V18.5Z" fill="#3B82F6" fillOpacity="0.7"/>
+        <path d="M4.5 4.5H19.5V8.5H4.5V4.5Z" fill="url(#blog-gradient)"/>
+        <path d="M4.5 10.5H14.5V12.5H4.5V10.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
+        <path d="M4.5 14.5H19.5V16.5H4.5V14.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
+        <path d="M16 10.5H19.5V12.5H16V10.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
+        <path d="M4.5 18.5H14.5V20.5H4.5V18.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
+        <defs>
+            <linearGradient id="blog-gradient" x1="4.5" y1="4.5" x2="19.5" y2="20.5" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#10B981"/>
+                <stop offset="1" stopColor="#3B82F6"/>
+            </linearGradient>
+        </defs>
     </svg>
 );
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -73,46 +83,11 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
         <path d="M18.244 2.25H21.552L14.325 10.51L23.054 21.75H16.388L10.395 14.093L3.678 21.75H0.369L8.097 12.91L-0.375 2.25H6.46L11.83 8.917L18.244 2.25ZM17.083 19.467H19.14L7.042 4.126H4.88L17.083 19.467Z" fill="white"/>
     </svg>
 );
-const SearchIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <circle cx="14" cy="14" r="9" stroke="#3B82F6" strokeWidth="2"/>
-        <path d="M21 21L28 28" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round"/>
-    </svg>
-);
-const TargetIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <circle cx="16" cy="16" r="12" stroke="#F59E0B" strokeWidth="2"/>
-        <circle cx="16" cy="16" r="6" stroke="#F59E0B" strokeWidth="2"/>
-        <circle cx="16" cy="16" r="1" fill="#F59E0B" stroke="#F59E0B" strokeWidth="2"/>
-    </svg>
-);
-const GlobeIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <circle cx="16" cy="16" r="12" stroke="#10B981" strokeWidth="2"/>
-        <path d="M4.24268 16H27.7574" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M16 4.24265C19.3137 7.55635 21 11.6863 21 16C21 20.3137 19.3137 24.4437 16 27.7574" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M16 4.24265C12.6863 7.55635 11 11.6863 11 16C11 20.3137 12.6863 24.4437 16 27.7574" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
-    </svg>
-);
-const WalletIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <rect x="5" y="8" width="22" height="16" rx="4" stroke="#8B5CF6" strokeWidth="2"/>
-        <path d="M22 13H24" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M5 12H7" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round"/>
-    </svg>
-);
 const CopyCheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M13 22H7C5.89543 22 5 21.1046 5 20V7C5 5.89543 5.89543 5 7 5H17C18.1046 5 19 5.89543 19 7V10" stroke="#EC4899" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M14 17L17 20L25 12" stroke="#EC4899" strokeWidth="2" strokeLinecap="round"/>
-        <rect x="12" y="12" width="15" height="15" rx="3" stroke="#EC4899" strokeWidth="2" strokeDasharray="4 4"/>
-    </svg>
-);
-const SparklesIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M16 4L18.6667 9.33333L24 12L18.6667 14.6667L16 20L13.3333 14.6667L8 12L13.3333 9.33333L16 4Z" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M25 20L26 22L28 23L26 24L25 26L24 24L22 23L24 22L25 20Z" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M8 22L9 24L11 25L9 26L8 28L7 26L5 25L7 24L8 22Z" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M13 22H7C5.89543 22 5 21.1046 5 20V7C5 5.89543 5.89543 5 7 5H17C18.1046 5 19 5.89543 19 7V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M14 17L17 20L25 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <rect x="12" y="12" width="15" height="15" rx="3" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4"/>
     </svg>
 );
 
@@ -195,40 +170,46 @@ export default function Home() {
 
   const features = [
     {
-      icon: SearchIcon,
+      icon: Search,
       title: 'Topic-Based Generation',
-      description: 'Enter any topic, and our AI will generate a list of creative content ideas in seconds.'
+      description: 'Enter any topic, and our AI will generate a list of creative content ideas in seconds.',
+      color: 'text-blue-500'
     },
     {
-      icon: TargetIcon,
+      icon: Target,
       title: 'Platform-Specific Ideas',
-      description: 'Get ideas tailored for blogs, Instagram, TikTok, and more to maximize your reach.'
+      description: 'Get ideas tailored for blogs, Instagram, TikTok, and more to maximize your reach.',
+      color: 'text-amber-500'
     },
     {
-      icon: GlobeIcon,
+      icon: Globe,
       title: 'Localized for Pakistan',
-      description: 'Ideas are culturally relevant and designed to resonate with the Pakistani audience.'
+      description: 'Ideas are culturally relevant and designed to resonate with the Pakistani audience.',
+      color: 'text-emerald-500'
     },
     {
-      icon: WalletIcon,
+      icon: Wallet,
       title: '100% Free to Use',
-      description: 'No subscriptions, no fees. Just endless content ideas to fuel your creativity.'
+      description: 'No subscriptions, no fees. Just endless content ideas to fuel your creativity.',
+      color: 'text-violet-500'
     },
     {
-      icon: CopyCheckIcon,
+      icon: CopyCheck,
       title: 'One-Click Copy',
-      description: 'Easily copy your favorite ideas to your clipboard for quick sharing and planning.'
+      description: 'Easily copy your favorite ideas to your clipboard for quick sharing and planning.',
+      color: 'text-pink-500'
     },
     {
-      icon: SparklesIcon,
+      icon: Sparkles,
       title: 'AI-Powered',
-      description: 'Leveraging cutting-edge AI to deliver fresh, trending, and engaging content suggestions.'
+      description: 'Leveraging cutting-edge AI to deliver fresh, trending, and engaging content suggestions.',
+      color: 'text-yellow-500'
     }
   ];
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
-       <div className="absolute top-0 left-0 right-0 -z-10 h-[50vh] w-full bg-gradient-to-br from-primary/10 via-background to-background"></div>
+       <div className="absolute top-0 left-0 right-0 -z-10 h-[60vh] w-full bg-gradient-to-br from-primary/10 via-accent/5 to-background"></div>
       <header className="container mx-auto px-4 pt-6">
         <h2 className="text-xl font-bold font-headline text-primary">Pakistani Content Compass</h2>
       </header>
@@ -248,7 +229,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <Card className="max-w-3xl mx-auto mt-12 shadow-2xl border-2 border-primary/10 overflow-hidden bg-card/80 backdrop-blur-xl">
+          <Card className="max-w-3xl mx-auto mt-12 shadow-2xl border-primary/10 overflow-hidden bg-card/80 backdrop-blur-xl">
             <CardContent className="p-6 md:p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-2">
@@ -257,7 +238,7 @@ export default function Home() {
                     id="topic"
                     placeholder="e.g., 'Street Food in Lahore'"
                     {...register('topic')}
-                    className="text-base py-6 rounded-lg"
+                    className="text-base py-6 rounded-lg bg-white/50"
                   />
                   {errors.topic && <p className="text-sm text-destructive">{errors.topic.message}</p>}
                 </div>
@@ -284,7 +265,7 @@ export default function Home() {
                    {errors.platform && <p className="text-sm text-destructive">{errors.platform.message}</p>}
                 </div>
 
-                <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14">
+                <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
                   {isLoading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : <Sparkles className="mr-2 h-6 w-6" />}
                   Generate Ideas
                 </Button>
@@ -313,7 +294,7 @@ export default function Home() {
                           exit={{ opacity: 0 }}
                           transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-4 flex items-center justify-between shadow-sm">
+                            <Card className="p-4 flex items-center justify-between shadow-sm bg-card/80">
                                 <div className="h-6 bg-muted rounded-md w-3/4 animate-pulse"></div>
                                 <div className="h-8 w-8 bg-muted rounded-full animate-pulse"></div>
                             </Card>
@@ -327,7 +308,7 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.15, type: 'spring', stiffness: 100 }}
                         >
-                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300">
+                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 bg-card/80">
                                 <p className="flex-1 text-slate-700 dark:text-slate-200 text-lg">{idea}</p>
                                 <Button
                                     variant="ghost"
@@ -363,7 +344,7 @@ export default function Home() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer hover:bg-primary/10 transition-colors"
+                          className="text-base px-4 py-2 cursor-pointer bg-primary/10 hover:bg-primary/20 transition-colors text-primary-foreground"
                           onClick={() => handleCopyToClipboard(tag)}
                         >
                           <Hash className="h-4 w-4 mr-1.5" />
@@ -398,8 +379,8 @@ export default function Home() {
                     >
                       <Card className="h-full bg-card/60 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                         <CardHeader className="items-center text-center">
-                          <div className="p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full mb-3">
-                            <Icon className="h-8 w-8" />
+                          <div className="p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-[20px] mb-3">
+                            <Icon className={`h-8 w-8 ${feature.color}`} />
                           </div>
                           <CardTitle>{feature.title}</CardTitle>
                         </CardHeader>
