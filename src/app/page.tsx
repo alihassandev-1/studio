@@ -171,44 +171,40 @@ export default function Home() {
       icon: Search,
       title: 'Topic-Based Generation',
       description: 'Enter any keyword and get creative, relevant content ideas instantly tailored to your niche.',
-      color: 'text-blue-500'
     },
     {
       icon: Target,
       title: 'Platform-Specific Ideas',
       description: 'Get optimized content ideas for Blog, Instagram, TikTok, YouTube, and Facebook that actually work.',
-      color: 'text-amber-500'
     },
     {
       icon: Globe,
       title: 'Localized for Pakistan',
       description: 'Content ideas that resonate with Pakistani culture, trends, and local context for maximum engagement.',
-      color: 'text-emerald-500'
     },
     {
       icon: Wallet,
       title: '100% Free to Use',
       description: 'No fees, no subscriptions, no limits. Generate unlimited content ideas absolutely free.',
-      color: 'text-violet-500'
     },
     {
       icon: CopyCheck,
       title: 'One-Click Copy',
       description: 'Easily copy your favorite ideas to your clipboard for quick sharing and planning.',
-      color: 'text-pink-500'
     },
     {
       icon: Sparkles,
       title: 'AI-Powered',
       description: 'Advanced AI algorithms ensure fresh, unique, and engaging content ideas every single time.',
-      color: 'text-yellow-500'
     }
   ];
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <header className="container mx-auto px-4 pt-8">
-        <h2 className="text-xl font-bold font-headline text-white/90">AI Powar</h2>
+        <h2 className="text-3xl font-bold font-headline text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400">
+          AI Powar
+        </h2>
       </header>
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8 md:py-16">
@@ -380,7 +376,7 @@ export default function Home() {
                     >
                       <Card className="h-full bg-white/80 backdrop-blur-sm border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
                         <CardHeader className="items-center text-center">
-                          <div className="p-3 bg-gradient-to-br from-blue-400 to-violet-500 rounded-[20px] mb-3 shadow-lg">
+                          <div className="p-3 bg-gradient-to-br from-primary to-accent rounded-[20px] mb-3 shadow-lg">
                             <Icon className={`h-8 w-8 text-white`} />
                           </div>
                           <CardTitle className="text-slate-800">{feature.title}</CardTitle>
