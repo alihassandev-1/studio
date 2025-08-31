@@ -16,47 +16,110 @@ import { useToast } from '@/hooks/use-toast';
 import {
   Copy,
   Loader2,
-  Newspaper,
-  Instagram,
-  Youtube,
-  Facebook,
   Sparkles,
-  Search,
-  Target,
-  Globe,
-  Wallet,
   CopyCheck,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
-      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 2.17-5.45 1.02-1.66-1.02-2.6-2.96-2.6-4.95-.01-1.99.93-3.96 2.41-5.16 1.12-.91 2.52-1.34 3.99-1.32.01-4.04-.01-8.08.02-12.12z"></path>
+const BlogIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M4.5 4.5H19.5V8.5H4.5V4.5Z" fill="#3B82F6"/>
+        <path d="M4.5 10.5H14.5V12.5H4.5V10.5Z" fill="#3B82F6" fillOpacity="0.7"/>
+        <path d="M4.5 14.5H19.5V16.5H4.5V14.5Z" fill="#3B82F6" fillOpacity="0.7"/>
+        <path d="M16 10.5H19.5V12.5H16V10.5Z" fill="#3B82F6" fillOpacity="0.7"/>
+        <path d="M4.5 18.5H14.5V20.5H4.5V18.5Z" fill="#3B82F6" fillOpacity="0.7"/>
     </svg>
 );
-
+const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <defs>
+            <radialGradient id="insta-gradient" cx="0.3" cy="1.2" r="1.3">
+                <stop offset="0" stopColor="#FEDA77" />
+                <stop offset="0.1" stopColor="#F58529" />
+                <stop offset="0.3" stopColor="#DD2A7B" />
+                <stop offset="0.6" stopColor="#8134AF" />
+                <stop offset="1" stopColor="#515BD4" />
+            </radialGradient>
+        </defs>
+        <rect width="24" height="24" rx="6" fill="url(#insta-gradient)" />
+        <path d="M12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M17.5 6.51L17.51 6.499" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+);
+const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <rect width="28" height="28" rx="6" fill="black"/>
+        <path d="M19.14 7.32996C18.2 7.31996 17.26 7.32996 16.32 7.32996C16.27 8.52996 15.82 9.72996 14.93 10.59C14.04 11.48 12.83 11.9 11.63 12.04V15.2C13.06 15.16 14.49 14.88 15.78 14.37C16.25 14.17 16.69 13.9 17.1 13.62C17.11 15.89 17.09 18.16 17.12 20.43C17.08 21.55 16.63 22.66 15.85 23.51C14.77 25.04 12.89 25.24 11.16 24.3C9.74001 23.44 8.91001 21.84 8.91001 20.21C8.92001 18.57 9.68001 16.92 11.02 15.93C11.94 15.2 13.11 14.85 14.28 14.86C14.27 11.66 14.29 8.46996 14.26 5.27996L19.14 7.32996Z" fill="#FE2C55"/>
+        <path d="M19.14 7.32996L14.26 5.27996V14.86C13.09 14.85 11.92 15.2 11.00 15.93C9.66001 16.92 8.90001 18.57 8.91001 20.21C8.91001 21.84 9.74001 23.44 11.16 24.3C12.89 25.24 14.77 25.04 15.85 23.51C16.63 22.66 17.08 21.55 17.12 20.43C17.09 18.16 17.11 15.89 17.1 13.62C17.51 13.9 17.95 14.17 18.42 14.37C18.66 14.46 18.9 14.56 19.14 14.63V10.87C17.99 10.73 16.84 10.38 15.78 9.84C14.93 10.59 15.38 9.39996 14.93 10.59C15.82 9.72996 16.27 8.52996 16.32 7.32996H19.14V10.87C18.9 10.8 18.66 10.71 18.42 10.61C16.95 10.02 15.52 10.29 14.28 11.23V7.32996H16.32C17.26 7.32996 18.2 7.31996 19.14 7.32996Z" fill="#20F1ED"/>
+    </svg>
+);
+const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <rect width="24" height="24" rx="6" fill="#FF0000"/>
+        <path d="M10 15L15 12L10 9V15Z" fill="white"/>
+    </svg>
+);
+const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <rect width="24" height="24" rx="6" fill="#1877F2"/>
+        <path d="M14.5 21V13.5H17.5L18 9.5H14.5V7.5C14.5 6.47 14.5 5.5 16.5 5.5H18V2.14C17.674 2.097 16.637 2 15.426 2C12.896 2 11 3.657 11 6.7V9.5H8V13.5H11V21H14.5Z" fill="white"/>
+    </svg>
+);
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        {...props}
-    >
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <rect width="24" height="24" rx="6" fill="black"/>
+        <path d="M18.244 2.25H21.552L14.325 10.51L23.054 21.75H16.388L10.395 14.093L3.678 21.75H0.369L8.097 12.91L-0.375 2.25H6.46L11.83 8.917L18.244 2.25ZM17.083 19.467H19.14L7.042 4.126H4.88L17.083 19.467Z" fill="white"/>
+    </svg>
+);
+const SearchIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <circle cx="14" cy="14" r="9" stroke="#3B82F6" strokeWidth="2"/>
+        <path d="M21 21L28 28" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+);
+const TargetIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <circle cx="16" cy="16" r="12" stroke="#F59E0B" strokeWidth="2"/>
+        <circle cx="16" cy="16" r="6" stroke="#F59E0B" strokeWidth="2"/>
+        <circle cx="16" cy="16" r="1" fill="#F59E0B" stroke="#F59E0B" strokeWidth="2"/>
+    </svg>
+);
+const GlobeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <circle cx="16" cy="16" r="12" stroke="#10B981" strokeWidth="2"/>
+        <path d="M4.24268 16H27.7574" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M16 4.24265C19.3137 7.55635 21 11.6863 21 16C21 20.3137 19.3137 24.4437 16 27.7574" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M16 4.24265C12.6863 7.55635 11 11.6863 11 16C11 20.3137 12.6863 24.4437 16 27.7574" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+);
+const WalletIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <rect x="5" y="8" width="22" height="16" rx="4" stroke="#8B5CF6" strokeWidth="2"/>
+        <path d="M22 13H24" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M5 12H7" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+);
+const CopyCheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M13 22H7C5.89543 22 5 21.1046 5 20V7C5 5.89543 5.89543 5 7 5H17C18.1046 5 19 5.89543 19 7V10" stroke="#EC4899" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M14 17L17 20L25 12" stroke="#EC4899" strokeWidth="2" strokeLinecap="round"/>
+        <rect x="12" y="12" width="15" height="15" rx="3" stroke="#EC4899" strokeWidth="2" stroke-dasharray="4 4"/>
+    </svg>
+);
+const SparklesIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path d="M16 4L18.6667 9.33333L24 12L18.6667 14.6667L16 20L13.3333 14.6667L8 12L13.3333 9.33333L16 4Z" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M25 20L26 22L28 23L26 24L25 26L24 24L22 23L24 22L25 20Z" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 22L9 24L11 25L9 26L8 28L7 26L5 25L7 24L8 22Z" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
 
 const platformIcons: { [key: string]: React.ElementType } = {
-  Blog: Newspaper,
-  Instagram: Instagram,
+  Blog: BlogIcon,
+  Instagram: InstagramIcon,
   TikTok: TikTokIcon,
-  YouTube: Youtube,
-  Facebook: Facebook,
+  YouTube: YouTubeIcon,
+  Facebook: FacebookIcon,
   X: XIcon,
 };
 
@@ -127,32 +190,32 @@ export default function Home() {
 
   const features = [
     {
-      icon: Search,
+      icon: SearchIcon,
       title: 'Topic-Based Generation',
       description: 'Enter any topic, and our AI will generate a list of creative content ideas in seconds.'
     },
     {
-      icon: Target,
+      icon: TargetIcon,
       title: 'Platform-Specific Ideas',
       description: 'Get ideas tailored for blogs, Instagram, TikTok, and more to maximize your reach.'
     },
     {
-      icon: Globe,
+      icon: GlobeIcon,
       title: 'Localized for Pakistan',
       description: 'Ideas are culturally relevant and designed to resonate with the Pakistani audience.'
     },
     {
-      icon: Wallet,
+      icon: WalletIcon,
       title: '100% Free to Use',
       description: 'No subscriptions, no fees. Just endless content ideas to fuel your creativity.'
     },
     {
-      icon: CopyCheck,
+      icon: CopyCheckIcon,
       title: 'One-Click Copy',
       description: 'Easily copy your favorite ideas to your clipboard for quick sharing and planning.'
     },
     {
-      icon: Sparkles,
+      icon: SparklesIcon,
       title: 'AI-Powered',
       description: 'Leveraging cutting-edge AI to deliver fresh, trending, and engaging content suggestions.'
     }
@@ -172,11 +235,11 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold font-headline text-slate-800 dark:text-white leading-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-slate-800 dark:text-white leading-tight">
               Never Run Out of <span className="text-primary">Content Ideas</span> Again
             </h1>
             <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Unlock viral potential with AI-generated content ideas tailored for the Pakistani audience. 100% free.
+              Stop overthinking, start creating! Generate viral content ideas for any platform in seconds.
             </p>
           </motion.div>
 
@@ -205,9 +268,9 @@ export default function Home() {
                           type="button"
                           variant={selectedPlatform === platform ? 'default' : 'outline'}
                           onClick={() => setValue('platform', platform, { shouldValidate: true })}
-                          className={`transition-all duration-200 h-14 text-base ${selectedPlatform === platform ? 'ring-2 ring-primary-foreground scale-105' : 'hover:bg-primary/5'}`}
+                          className={`transition-all duration-200 h-14 text-base justify-start pl-4 ${selectedPlatform === platform ? 'ring-2 ring-primary-foreground scale-105' : 'hover:bg-primary/5'}`}
                         >
-                          <Icon className={`h-6 w-6 mr-2 ${selectedPlatform !== platform ? 'text-primary' : ''}`} />
+                          <Icon className="h-6 w-6 mr-3" />
                           <span className="font-semibold">{platform}</span>
                         </Button>
                       );
@@ -299,12 +362,12 @@ export default function Home() {
                     >
                       <Card className="h-full bg-card/60 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                         <CardHeader className="items-center text-center">
-                          <div className="p-4 bg-primary/10 rounded-full mb-2">
-                            <Icon className="h-8 w-8 text-primary" />
+                          <div className="p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full mb-3">
+                            <Icon className="h-8 w-8" />
                           </div>
                           <CardTitle>{feature.title}</CardTitle>
                         </CardHeader>
-                        <CardContent className="text-center">
+                        <CardContent className="text-center px-6 pb-6">
                           <p className="text-slate-600 dark:text-slate-300">{feature.description}</p>
                         </CardContent>
                       </Card>
