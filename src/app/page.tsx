@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import Link from 'next/link';
 import {
   generatePlatformSpecificContentIdeas,
   type GeneratePlatformSpecificContentIdeasInput,
@@ -252,9 +253,11 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <header className="container mx-auto px-4 pt-8">
-        <h2 className="text-3xl font-bold font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-          AI Powar
-        </h2>
+        <Link href="/">
+          <h2 className="text-3xl font-bold font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+            AI Powar
+          </h2>
+        </Link>
       </header>
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8 md:py-16">
@@ -395,6 +398,10 @@ export default function Home() {
       </main>
       <footer className="py-8 mt-12">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
+          <div className="flex justify-center gap-4 mb-2">
+            <Link href="/about" className="hover:text-foreground">About</Link>
+            <Link href="/terms" className="hover:text-foreground">Terms & Privacy</Link>
+          </div>
           <p>&copy; {currentYear} AI Powar. Made with ❤️ in Pakistan.</p>
         </div>
       </footer>
