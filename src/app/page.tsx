@@ -209,7 +209,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
-       <div className="absolute top-0 left-0 right-0 -z-10 h-[60vh] w-full bg-gradient-to-br from-primary/10 via-accent/5 to-background"></div>
       <header className="container mx-auto px-4 pt-6">
         <h2 className="text-xl font-bold font-headline text-primary">Pakistani Content Compass</h2>
       </header>
@@ -238,7 +237,7 @@ export default function Home() {
                     id="topic"
                     placeholder="e.g., 'Street Food in Lahore'"
                     {...register('topic')}
-                    className="text-base py-6 rounded-lg bg-white/50"
+                    className="text-base py-6 rounded-lg bg-white/50 dark:bg-card/50"
                   />
                   {errors.topic && <p className="text-sm text-destructive">{errors.topic.message}</p>}
                 </div>
@@ -254,7 +253,7 @@ export default function Home() {
                           type="button"
                           variant={selectedPlatform === platform ? 'default' : 'outline'}
                           onClick={() => setValue('platform', platform, { shouldValidate: true })}
-                          className={`transition-all duration-200 h-14 text-base justify-start pl-4 ${selectedPlatform === platform ? 'ring-2 ring-primary-foreground scale-105' : 'hover:bg-primary/5'}`}
+                          className={`transition-all duration-200 h-14 text-base justify-start pl-4 ${selectedPlatform === platform ? 'ring-2 ring-primary-foreground scale-105' : 'hover:bg-primary/5 bg-white/50 dark:bg-card/50'}`}
                         >
                           <Icon className="h-6 w-6 mr-3" />
                           <span className="font-semibold">{platform}</span>
@@ -294,7 +293,7 @@ export default function Home() {
                           exit={{ opacity: 0 }}
                           transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-4 flex items-center justify-between shadow-sm bg-card/80">
+                            <Card className="p-4 flex items-center justify-between shadow-sm bg-card/80 backdrop-blur-sm">
                                 <div className="h-6 bg-muted rounded-md w-3/4 animate-pulse"></div>
                                 <div className="h-8 w-8 bg-muted rounded-full animate-pulse"></div>
                             </Card>
@@ -308,7 +307,7 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.15, type: 'spring', stiffness: 100 }}
                         >
-                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 bg-card/80">
+                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 bg-card/80 backdrop-blur-sm">
                                 <p className="flex-1 text-slate-700 dark:text-slate-200 text-lg">{idea}</p>
                                 <Button
                                     variant="ghost"
@@ -344,7 +343,7 @@ export default function Home() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer bg-primary/10 hover:bg-primary/20 transition-colors text-primary-foreground"
+                          className="text-base px-4 py-2 cursor-pointer bg-primary/10 hover:bg-primary/20 transition-colors text-primary"
                           onClick={() => handleCopyToClipboard(tag)}
                         >
                           <Hash className="h-4 w-4 mr-1.5" />
@@ -379,7 +378,7 @@ export default function Home() {
                     >
                       <Card className="h-full bg-card/60 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                         <CardHeader className="items-center text-center">
-                          <div className="p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-[20px] mb-3">
+                          <div className="p-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-[20px] mb-3">
                             <Icon className={`h-8 w-8 ${feature.color}`} />
                           </div>
                           <CardTitle>{feature.title}</CardTitle>

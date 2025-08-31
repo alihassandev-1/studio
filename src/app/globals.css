@@ -4,65 +4,65 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 215 28% 18%;
+    --background: 240 50% 98%;
+    --foreground: 224 76% 15%;
 
-    --card: 210 40% 100%;
-    --card-foreground: 215 28% 18%;
+    --card: 240 50% 100%;
+    --card-foreground: 224 76% 15%;
 
-    --popover: 210 40% 100%;
-    --popover-foreground: 215 28% 18%;
+    --popover: 240 50% 100%;
+    --popover-foreground: 224 76% 15%;
 
-    --primary: 158 70% 45%; /* Teal/Green */
+    --primary: 250 84% 60%; /* Violet */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 215 28% 18%;
+    --secondary: 240 50% 96%;
+    --secondary-foreground: 224 76% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 20% 45%;
+    --muted: 240 50% 96%;
+    --muted-foreground: 240 20% 45%;
 
-    --accent: 255 80% 60%; /* Vibrant Blue/Purple */
+    --accent: 330 84% 60%; /* Pink */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 210 40% 90%;
-    --input: 210 40% 94%;
-    --ring: 158 70% 45%;
+    --border: 240 50% 90%;
+    --input: 240 50% 94%;
+    --ring: 250 84% 60%;
 
     --radius: 0.8rem;
   }
  
   .dark {
-    --background: 215 28% 18%;
+    --background: 224 71% 4%;
     --foreground: 210 40% 98%;
 
-    --card: 215 28% 12%;
+    --card: 224 71% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 215 28% 12%;
+    --popover: 224 71% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 158 70% 45%;
+    --primary: 250 84% 60%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 215 28% 23%;
+    --secondary: 224 71% 15%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 28% 23%;
+    --muted: 224 71% 15%;
     --muted-foreground: 210 40% 65%;
 
-    --accent: 255 80% 60%;
+    --accent: 330 84% 60%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 28% 28%;
-    --input: 215 28% 23%;
-    --ring: 158 70% 45%;
+    --border: 224 71% 20%;
+    --input: 224 71% 15%;
+    --ring: 250 84% 60%;
   }
 }
 
@@ -71,6 +71,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+  }
+  
+  html, body {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-slate-900 dark:via-purple-950 dark:to-slate-900;
   }
 }
