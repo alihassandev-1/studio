@@ -249,7 +249,7 @@ export default function Home() {
                           onClick={() => setValue('platform', platform, { shouldValidate: true })}
                           className={`transition-all duration-300 ease-in-out h-14 text-base justify-start pl-4 rounded-lg
                             ${selectedPlatform === platform 
-                              ? 'ring-2 ring-primary/80 scale-105 shadow-lg bg-gradient-to-r from-primary to-accent text-white' 
+                              ? 'ring-2 ring-primary/80 scale-105 shadow-lg bg-gradient-to-r from-primary to-accent text-primary-foreground' 
                               : 'hover:bg-secondary'
                             }`}
                         >
@@ -292,8 +292,8 @@ export default function Home() {
                           transition={{ delay: i * 0.1 }}
                         >
                             <Card className="p-4 flex items-center justify-between shadow-sm rounded-2xl">
-                                <div className="h-6 bg-slate-200 rounded-md w-3/4 animate-pulse"></div>
-                                <div className="h-8 w-8 bg-slate-200 rounded-full animate-pulse"></div>
+                                <div className="h-6 bg-slate-700 rounded-md w-3/4 animate-pulse"></div>
+                                <div className="h-8 w-8 bg-slate-700 rounded-full animate-pulse"></div>
                             </Card>
                         </motion.div>
                       ))}
@@ -341,7 +341,7 @@ export default function Home() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer hover:bg-sky-200/90 transition-colors text-primary rounded-lg border-primary/20"
+                          className="text-base px-4 py-2 cursor-pointer hover:bg-secondary/80 transition-colors rounded-lg border-border"
                           onClick={() => handleCopyToClipboard(tag)}
                         >
                           <Hash className="h-4 w-4 mr-1.5" />
