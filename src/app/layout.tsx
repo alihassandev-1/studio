@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: 'AI Power',
+  title: 'AI Powar',
   description: 'AI-Powered Content Idea Generator – Free in Pakistan.',
 };
 

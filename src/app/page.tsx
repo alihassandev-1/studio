@@ -208,7 +208,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <header className="container mx-auto px-4 pt-8">
-        <h2 className="text-xl font-bold font-headline text-white/90">AI Power</h2>
+        <h2 className="text-xl font-bold font-headline text-white/90">AI Powar</h2>
       </header>
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8 md:py-16">
@@ -399,7 +399,7 @@ export default function Home() {
       </main>
       <footer className="py-8 mt-12">
         <div className="container mx-auto text-center text-sm text-slate-200/80">
-          <p>&copy; {currentYear} AI Power. Made with ❤️ in Pakistan.</p>
+          <p>&copy; {currentYear} AI Powar. Made with ❤️ in Pakistan.</p>
         </div>
       </footer>
     </div>
