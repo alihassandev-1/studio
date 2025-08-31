@@ -24,6 +24,9 @@ const GeneratePlatformSpecificContentIdeasOutputSchema = z.object({
   ideas: z
     .array(z.string())
     .describe('An array of content ideas tailored for the specified platform.'),
+  hashtags: z
+    .array(z.string())
+    .describe('An array of 5 relevant hashtags for the topic.'),
 });
 export type GeneratePlatformSpecificContentIdeasOutput = z.infer<
   typeof GeneratePlatformSpecificContentIdeasOutputSchema
@@ -43,7 +46,10 @@ const generatePlatformSpecificContentIdeasPrompt = ai.definePrompt({
 
   Generate 3-5 content ideas tailored for {{platform}} based on the topic: {{topic}}.
   The ideas should be relevant and engaging for a Pakistani audience. Return the ideas in a numbered list.
-  Do not include introductory or concluding sentences. Only include the numbered list of ideas.
+  
+  Also, generate 5 relevant hashtags for the topic.
+
+  Do not include introductory or concluding sentences. Only include the numbered list of ideas and the hashtags.
   `,
 });
 
@@ -57,6 +63,7 @@ const generatePlatformSpecificContentIdeasFlow = ai.defineFlow(
     const {output} = await generatePlatformSpecificContentIdeasPrompt(input);
     return {
       ideas: output!.ideas,
+      hashtags: output!.hashtags,
     };
   }
 );

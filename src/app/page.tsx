@@ -18,8 +18,10 @@ import {
   Loader2,
   Sparkles,
   CopyCheck,
+  Hash,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
 
 const BlogIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -141,6 +143,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function Home() {
   const [ideas, setIdeas] = useState<string[]>([]);
+  const [hashtags, setHashtags] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedIdea, setCopiedIdea] = useState<string | null>(null);
   const { toast } = useToast();
@@ -163,9 +166,11 @@ export default function Home() {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
     setIdeas([]);
+    setHashtags([]);
     try {
       const result = await generatePlatformSpecificContentIdeas(data);
       setIdeas(result.ideas);
+      setHashtags(result.hashtags || []);
     } catch (error) {
       console.error('Error generating ideas:', error);
       toast({
@@ -338,6 +343,37 @@ export default function Home() {
                     ))}
                   </AnimatePresence>
                 </div>
+                {hashtags.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  className="mt-8"
+                >
+                  <h3 className="text-2xl font-bold font-headline text-center mb-4">
+                    Trending Hashtags
+                  </h3>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {hashtags.map((tag, index) => (
+                      <motion.div
+                        key={tag}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <Badge
+                          variant="secondary"
+                          className="text-base px-4 py-2 cursor-pointer hover:bg-primary/10 transition-colors"
+                          onClick={() => handleCopyToClipboard(tag)}
+                        >
+                          <Hash className="h-4 w-4 mr-1.5" />
+                          {tag.replace(/^#/, '')}
+                        </Badge>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
           )}
 
@@ -346,8 +382,8 @@ export default function Home() {
               <h2 className="text-4xl font-bold text-center font-headline text-slate-800 dark:text-white">
                 Why Choose Us?
               </h2>
-               <p className="mt-4 text-lg text-center text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-                 We provide powerful tools to supercharge your content creation journey, helping you stay ahead of the curve.
+               <p className="mt-4 text-lg text-center text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+                 Everything you need to create viral content for the Pakistani audience, all in one place.
                </p>
               <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {features.map((feature, index) => {
