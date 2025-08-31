@@ -13,7 +13,7 @@ import {z} from 'genkit';
 const GeneratePlatformSpecificContentIdeasInputSchema = z.object({
   topic: z.string().describe('The topic to generate content ideas for.'),
   platform: z
-    .enum(['Blog', 'Instagram', 'TikTok', 'YouTube', 'Facebook'])
+    .enum(['Blog', 'Instagram', 'TikTok', 'YouTube', 'Facebook', 'X'])
     .describe('The platform to tailor content ideas for.'),
 });
 export type GeneratePlatformSpecificContentIdeasInput = z.infer<
