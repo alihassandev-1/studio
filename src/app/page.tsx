@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -83,13 +83,6 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
         <path d="M18.244 2.25H21.552L14.325 10.51L23.054 21.75H16.388L10.395 14.093L3.678 21.75H0.369L8.097 12.91L-0.375 2.25H6.46L11.83 8.917L18.244 2.25ZM17.083 19.467H19.14L7.042 4.126H4.88L17.083 19.467Z" fill="white"/>
     </svg>
 );
-const CopyCheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M13 22H7C5.89543 22 5 21.1046 5 20V7C5 5.89543 5.89543 5 7 5H17C18.1046 5 19 5.89543 19 7V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M14 17L17 20L25 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <rect x="12" y="12" width="15" height="15" rx="3" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4"/>
-    </svg>
-);
 
 const platformIcons: { [key: string]: React.ElementType } = {
   Blog: BlogIcon,
@@ -122,6 +115,11 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [copiedIdea, setCopiedIdea] = useState<string | null>(null);
   const { toast } = useToast();
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   const {
     register,
@@ -172,25 +170,25 @@ export default function Home() {
     {
       icon: Search,
       title: 'Topic-Based Generation',
-      description: 'Enter any topic, and our AI will generate a list of creative content ideas in seconds.',
+      description: 'Enter any keyword and get creative, relevant content ideas instantly tailored to your niche.',
       color: 'text-blue-500'
     },
     {
       icon: Target,
       title: 'Platform-Specific Ideas',
-      description: 'Get ideas tailored for blogs, Instagram, TikTok, and more to maximize your reach.',
+      description: 'Get optimized content ideas for Blog, Instagram, TikTok, YouTube, and Facebook that actually work.',
       color: 'text-amber-500'
     },
     {
       icon: Globe,
       title: 'Localized for Pakistan',
-      description: 'Ideas are culturally relevant and designed to resonate with the Pakistani audience.',
+      description: 'Content ideas that resonate with Pakistani culture, trends, and local context for maximum engagement.',
       color: 'text-emerald-500'
     },
     {
       icon: Wallet,
       title: '100% Free to Use',
-      description: 'No subscriptions, no fees. Just endless content ideas to fuel your creativity.',
+      description: 'No fees, no subscriptions, no limits. Generate unlimited content ideas absolutely free.',
       color: 'text-violet-500'
     },
     {
@@ -202,15 +200,15 @@ export default function Home() {
     {
       icon: Sparkles,
       title: 'AI-Powered',
-      description: 'Leveraging cutting-edge AI to deliver fresh, trending, and engaging content suggestions.',
+      description: 'Advanced AI algorithms ensure fresh, unique, and engaging content ideas every single time.',
       color: 'text-yellow-500'
     }
   ];
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
-      <header className="container mx-auto px-4 pt-6">
-        <h2 className="text-xl font-bold font-headline text-primary">Pakistani Content Compass</h2>
+      <header className="container mx-auto px-4 pt-8">
+        <h2 className="text-xl font-bold font-headline text-white/90">Pakistani Content Compass</h2>
       </header>
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8 md:py-16">
@@ -220,30 +218,30 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-slate-800 dark:text-white leading-tight">
-              Never Run Out of <span className="text-primary">Content Ideas</span> Again
+            <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-white leading-tight [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
+              Never Run Out of <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-sky-300">Content Ideas</span> Again
             </h1>
-            <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+            <p className="mt-4 text-lg md:text-xl text-slate-200 max-w-2xl mx-auto">
               Stop overthinking, start creating! Generate viral content ideas for any platform in seconds.
             </p>
           </motion.div>
 
-          <Card className="max-w-3xl mx-auto mt-12 shadow-2xl border-primary/10 overflow-hidden bg-card/80 backdrop-blur-xl">
+          <Card className="max-w-3xl mx-auto mt-12 shadow-2xl rounded-2xl overflow-hidden bg-white/90 backdrop-blur-xl border-white/20">
             <CardContent className="p-6 md:p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="topic" className="text-base font-medium">Enter a topic or keyword</Label>
+                  <Label htmlFor="topic" className="text-base font-medium text-slate-800">Enter a topic or keyword</Label>
                   <Input
                     id="topic"
                     placeholder="e.g., 'Street Food in Lahore'"
                     {...register('topic')}
-                    className="text-base py-6 rounded-lg bg-white/50 dark:bg-card/50"
+                    className="text-base py-6 rounded-lg bg-white/80 focus:ring-offset-0"
                   />
                   {errors.topic && <p className="text-sm text-destructive">{errors.topic.message}</p>}
                 </div>
 
                 <div className="space-y-3">
-                   <Label className="text-base font-medium">Select a platform</Label>
+                   <Label className="text-base font-medium text-slate-800">Select a platform</Label>
                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {platforms.map((platform) => {
                       const Icon = platformIcons[platform];
@@ -253,7 +251,11 @@ export default function Home() {
                           type="button"
                           variant={selectedPlatform === platform ? 'default' : 'outline'}
                           onClick={() => setValue('platform', platform, { shouldValidate: true })}
-                          className={`transition-all duration-200 h-14 text-base justify-start pl-4 ${selectedPlatform === platform ? 'ring-2 ring-primary-foreground scale-105' : 'hover:bg-primary/5 bg-white/50 dark:bg-card/50'}`}
+                          className={`transition-all duration-300 ease-in-out h-14 text-base justify-start pl-4 rounded-lg
+                            ${selectedPlatform === platform 
+                              ? 'ring-2 ring-primary/80 scale-105 shadow-lg bg-gradient-to-r from-primary to-accent text-white' 
+                              : 'hover:bg-sky-100/50 hover:border-primary/50 bg-white/80 border-slate-200 text-slate-700'
+                            }`}
                         >
                           <Icon className="h-6 w-6 mr-3" />
                           <span className="font-semibold">{platform}</span>
@@ -264,7 +266,7 @@ export default function Home() {
                    {errors.platform && <p className="text-sm text-destructive">{errors.platform.message}</p>}
                 </div>
 
-                <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity">
+                <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
                   {isLoading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : <Sparkles className="mr-2 h-6 w-6" />}
                   Generate Ideas
                 </Button>
@@ -279,7 +281,7 @@ export default function Home() {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="max-w-3xl mx-auto mt-12"
             >
-                <h2 className="text-3xl font-bold font-headline text-center mb-8">
+                <h2 className="text-3xl font-bold font-headline text-center mb-8 text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
                   Here are your fresh ideas!
                 </h2>
                 <div className="space-y-4">
@@ -293,9 +295,9 @@ export default function Home() {
                           exit={{ opacity: 0 }}
                           transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-4 flex items-center justify-between shadow-sm bg-card/80 backdrop-blur-sm">
-                                <div className="h-6 bg-muted rounded-md w-3/4 animate-pulse"></div>
-                                <div className="h-8 w-8 bg-muted rounded-full animate-pulse"></div>
+                            <Card className="p-4 flex items-center justify-between shadow-sm bg-white/90 backdrop-blur-sm rounded-2xl">
+                                <div className="h-6 bg-slate-200 rounded-md w-3/4 animate-pulse"></div>
+                                <div className="h-8 w-8 bg-slate-200 rounded-full animate-pulse"></div>
                             </Card>
                         </motion.div>
                       ))}
@@ -307,8 +309,8 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.15, type: 'spring', stiffness: 100 }}
                         >
-                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 bg-card/80 backdrop-blur-sm">
-                                <p className="flex-1 text-slate-700 dark:text-slate-200 text-lg">{idea}</p>
+                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 bg-white/90 backdrop-blur-sm rounded-2xl">
+                                <p className="flex-1 text-slate-800 text-lg">{idea}</p>
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -323,17 +325,17 @@ export default function Home() {
                     ))}
                   </AnimatePresence>
                 </div>
-                {hashtags.length > 0 && (
+                {hashtags.length > 0 && !isLoading && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.5 }}
                   className="mt-8"
                 >
-                  <h3 className="text-2xl font-bold font-headline text-center mb-4">
+                  <h3 className="text-2xl font-bold font-headline text-center mb-4 text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
                     Trending Hashtags
                   </h3>
-                  <div className="flex flex-wrap justify-center gap-2">
+                  <div className="flex flex-wrap justify-center gap-3">
                     {hashtags.map((tag, index) => (
                       <motion.div
                         key={tag}
@@ -343,7 +345,7 @@ export default function Home() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer bg-primary/10 hover:bg-primary/20 transition-colors text-primary"
+                          className="text-base px-4 py-2 cursor-pointer bg-sky-100/80 hover:bg-sky-200/90 transition-colors text-primary rounded-lg border-primary/20"
                           onClick={() => handleCopyToClipboard(tag)}
                         >
                           <Hash className="h-4 w-4 mr-1.5" />
@@ -359,10 +361,10 @@ export default function Home() {
 
           <section className="mt-20 md:mt-32">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-4xl font-bold text-center font-headline text-slate-800 dark:text-white">
+              <h2 className="text-4xl font-bold text-center font-headline text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
                 Why Choose Us?
               </h2>
-               <p className="mt-4 text-lg text-center text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+               <p className="mt-4 text-lg text-center text-slate-200 max-w-3xl mx-auto">
                  Everything you need to create viral content for the Pakistani audience, all in one place.
                </p>
               <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -376,15 +378,15 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.5 }}
                       transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
                     >
-                      <Card className="h-full bg-card/60 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                      <Card className="h-full bg-white/80 backdrop-blur-sm border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
                         <CardHeader className="items-center text-center">
-                          <div className="p-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-[20px] mb-3">
-                            <Icon className={`h-8 w-8 ${feature.color}`} />
+                          <div className="p-3 bg-gradient-to-br from-blue-400 to-violet-500 rounded-[20px] mb-3 shadow-lg">
+                            <Icon className={`h-8 w-8 text-white`} />
                           </div>
-                          <CardTitle>{feature.title}</CardTitle>
+                          <CardTitle className="text-slate-800">{feature.title}</CardTitle>
                         </CardHeader>
                         <CardContent className="text-center px-6 pb-6">
-                          <p className="text-slate-600 dark:text-slate-300">{feature.description}</p>
+                          <p className="text-slate-600">{feature.description}</p>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -396,8 +398,8 @@ export default function Home() {
         </div>
       </main>
       <footer className="py-8 mt-12">
-        <div className="container mx-auto text-center text-sm text-slate-500">
-          <p>&copy; {new Date().getFullYear()} Pakistani Content Compass. Made with ❤️ in Pakistan.</p>
+        <div className="container mx-auto text-center text-sm text-slate-200/80">
+          <p>&copy; {currentYear} Pakistani Content Compass. Made with ❤️ in Pakistan.</p>
         </div>
       </footer>
     </div>
