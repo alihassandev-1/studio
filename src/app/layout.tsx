@@ -4,8 +4,19 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: 'AI Powar',
-  description: 'AI-Powered Content Idea Generator – Free in Pakistan.',
+  title: 'AI Powar - Free AI Content Idea Generator for Pakistan',
+  description: 'Generate unlimited, viral content ideas for TikTok, YouTube, Instagram, and more with AI Powar. Get platform-specific, localized content ideas for Pakistani audiences for free.',
+  keywords: ['content ideas', 'ai content generator', 'pakistan content creation', 'viral ideas', 'tiktok ideas', 'youtube ideas', 'instagram ideas', 'free ai tool'],
+  openGraph: {
+    title: 'AI Powar - Free AI Content Idea Generator for Pakistan',
+    description: 'Generate unlimited, viral content ideas for TikTok, YouTube, Instagram, and more with AI Powar. Get platform-specific, localized content ideas for Pakistani audiences for free.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Powar - Free AI Content Idea Generator for Pakistan',
+    description: 'Generate unlimited, viral content ideas for TikTok, YouTube, Instagram, and more with AI Powar. Get platform-specific, localized content ideas for Pakistani audiences for free.',
+  },
 };
 
 export default function RootLayout({

@@ -24,8 +24,8 @@ import {
   Globe,
   Wallet,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 const BlogIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -109,6 +109,51 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+function ResultCard({ idea, index, onCopy, isCopied }: { idea: string, index: number, onCopy: (idea: string) => void, isCopied: boolean }) {
+    return (
+        <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 rounded-2xl fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+            <p className="flex-1 text-lg">{idea}</p>
+            <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onCopy(idea)}
+                aria-label="Copy idea"
+                className="opacity-60 group-hover:opacity-100 transition-opacity"
+            >
+                {isCopied ? <CopyCheck className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5" />}
+            </Button>
+        </Card>
+    )
+}
+
+function SkeletonCard() {
+    return (
+        <Card className="p-4 flex items-center justify-between shadow-sm rounded-2xl">
+            <div className="h-6 bg-slate-700 rounded-md w-3/4 animate-pulse"></div>
+            <div className="h-8 w-8 bg-slate-700 rounded-full animate-pulse"></div>
+        </Card>
+    )
+}
+
+function FeatureCard({ icon: Icon, title, description, index }: { icon: React.ElementType, title: string, description: string, index: number }) {
+    return (
+        <div className="fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+            <Card className="h-full hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
+                <CardHeader className="items-center text-center">
+                    <div className="p-3 bg-gradient-to-br from-primary to-accent rounded-[20px] mb-3 shadow-lg">
+                        <Icon className={`h-8 w-8 text-white`} />
+                    </div>
+                    <CardTitle>{title}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center px-6 pb-6">
+                    <p className="text-muted-foreground">{description}</p>
+                </CardContent>
+            </Card>
+        </div>
+    )
+}
+
+
 export default function Home() {
   const [ideas, setIdeas] = useState<string[]>([]);
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -116,6 +161,7 @@ export default function Home() {
   const [copiedIdea, setCopiedIdea] = useState<string | null>(null);
   const { toast } = useToast();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -138,6 +184,7 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
+    setShowResults(true);
     setIdeas([]);
     setHashtags([]);
     try {
@@ -211,11 +258,8 @@ export default function Home() {
       </header>
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8 md:py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto text-center"
+          <div
+            className="max-w-4xl mx-auto text-center initial-fade-in"
           >
             <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-foreground leading-tight">
               Never Run Out of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Content Ideas</span> Again
@@ -223,7 +267,7 @@ export default function Home() {
             <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Stop overthinking, start creating! Generate viral content ideas for any platform in seconds.
             </p>
-          </motion.div>
+          </div>
 
           <Card className="max-w-3xl mx-auto mt-12 shadow-lg rounded-2xl overflow-hidden bg-card">
             <CardContent className="p-6 md:p-8">
@@ -273,74 +317,42 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          {(isLoading || ideas.length > 0) && (
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+          {showResults && (
+            <div
               className="max-w-3xl mx-auto mt-12"
             >
                 <h2 className="text-3xl font-bold font-headline text-center mb-8">
                   Here are your fresh ideas!
                 </h2>
                 <div className="space-y-4">
-                  <AnimatePresence>
-                    {isLoading &&
+                  {isLoading &&
                       [...Array(3)].map((_, i) => (
-                        <motion.div
-                          key={`loader-${i}`}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ delay: i * 0.1 }}
-                        >
-                            <Card className="p-4 flex items-center justify-between shadow-sm rounded-2xl">
-                                <div className="h-6 bg-slate-700 rounded-md w-3/4 animate-pulse"></div>
-                                <div className="h-8 w-8 bg-slate-700 rounded-full animate-pulse"></div>
-                            </Card>
-                        </motion.div>
+                        <SkeletonCard key={i} />
                       ))}
 
                     {!isLoading && ideas.map((idea, index) => (
-                        <motion.div
-                          key={`${idea}-${index}`}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.15, type: 'spring', stiffness: 100 }}
-                        >
-                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 rounded-2xl">
-                                <p className="flex-1 text-lg">{idea}</p>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => handleCopyToClipboard(idea)}
-                                    aria-label="Copy idea"
-                                    className="opacity-60 group-hover:opacity-100 transition-opacity"
-                                >
-                                    {copiedIdea === idea ? <CopyCheck className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5" />}
-                                </Button>
-                            </Card>
-                        </motion.div>
+                        <ResultCard 
+                            key={`${idea}-${index}`}
+                            idea={idea}
+                            index={index}
+                            onCopy={handleCopyToClipboard}
+                            isCopied={copiedIdea === idea}
+                        />
                     ))}
-                  </AnimatePresence>
                 </div>
                 {hashtags.length > 0 && !isLoading && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                  className="mt-8"
+                <div
+                  className="mt-8 fade-in-up"
                 >
                   <h3 className="text-2xl font-bold font-headline text-center mb-4">
                     Trending Hashtags
                   </h3>
                   <div className="flex flex-wrap justify-center gap-3">
                     {hashtags.map((tag, index) => (
-                      <motion.div
+                      <div
                         key={tag}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.1 }}
+                        className="fade-in-up"
+                        style={{ animationDelay: `${index * 0.1}s` }}
                       >
                         <Badge
                           variant="secondary"
@@ -350,12 +362,12 @@ export default function Home() {
                           <Hash className="h-4 w-4 mr-1.5" />
                           {tag.replace(/^#/, '')}
                         </Badge>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
-            </motion.div>
+            </div>
           )}
 
           <section className="mt-20 md:mt-32">
@@ -367,30 +379,15 @@ export default function Home() {
                  Everything you need to create viral content for the Pakistani audience, all in one place.
                </p>
               <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {features.map((feature, index) => {
-                  const Icon = feature.icon;
-                  return (
-                    <motion.div
-                      key={feature.title}
-                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-                    >
-                      <Card className="h-full hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
-                        <CardHeader className="items-center text-center">
-                          <div className="p-3 bg-gradient-to-br from-primary to-accent rounded-[20px] mb-3 shadow-lg">
-                            <Icon className={`h-8 w-8 text-white`} />
-                          </div>
-                          <CardTitle>{feature.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="text-center px-6 pb-6">
-                          <p className="text-muted-foreground">{feature.description}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  )
-                })}
+                {features.map((feature, index) => (
+                    <FeatureCard 
+                        key={feature.title}
+                        icon={feature.icon}
+                        title={feature.title}
+                        description={feature.description}
+                        index={index}
+                    />
+                ))}
               </div>
             </div>
           </section>
