@@ -202,7 +202,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <header className="container mx-auto px-4 pt-8">
-        <h2 className="text-3xl font-bold font-headline text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400">
+        <h2 className="text-3xl font-bold font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
           AI Powar
         </h2>
       </header>
@@ -214,30 +214,30 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-white leading-tight [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
-              Never Run Out of <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-sky-300">Content Ideas</span> Again
+            <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-foreground leading-tight">
+              Never Run Out of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Content Ideas</span> Again
             </h1>
-            <p className="mt-4 text-lg md:text-xl text-slate-200 max-w-2xl mx-auto">
+            <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Stop overthinking, start creating! Generate viral content ideas for any platform in seconds.
             </p>
           </motion.div>
 
-          <Card className="max-w-3xl mx-auto mt-12 shadow-2xl rounded-2xl overflow-hidden bg-white/90 backdrop-blur-xl border-white/20">
+          <Card className="max-w-3xl mx-auto mt-12 shadow-lg rounded-2xl overflow-hidden bg-card">
             <CardContent className="p-6 md:p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="topic" className="text-base font-medium text-slate-800">Enter a topic or keyword</Label>
+                  <Label htmlFor="topic" className="text-base font-medium">Enter a topic or keyword</Label>
                   <Input
                     id="topic"
                     placeholder="e.g., 'Street Food in Lahore'"
                     {...register('topic')}
-                    className="text-base py-6 rounded-lg bg-white/80 focus:ring-offset-0"
+                    className="text-base py-6 rounded-lg"
                   />
                   {errors.topic && <p className="text-sm text-destructive">{errors.topic.message}</p>}
                 </div>
 
                 <div className="space-y-3">
-                   <Label className="text-base font-medium text-slate-800">Select a platform</Label>
+                   <Label className="text-base font-medium">Select a platform</Label>
                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {platforms.map((platform) => {
                       const Icon = platformIcons[platform];
@@ -250,7 +250,7 @@ export default function Home() {
                           className={`transition-all duration-300 ease-in-out h-14 text-base justify-start pl-4 rounded-lg
                             ${selectedPlatform === platform 
                               ? 'ring-2 ring-primary/80 scale-105 shadow-lg bg-gradient-to-r from-primary to-accent text-white' 
-                              : 'hover:bg-sky-100/50 hover:border-primary/50 bg-white/80 border-slate-200 text-slate-700'
+                              : 'hover:bg-secondary'
                             }`}
                         >
                           <Icon className="h-6 w-6 mr-3" />
@@ -277,7 +277,7 @@ export default function Home() {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="max-w-3xl mx-auto mt-12"
             >
-                <h2 className="text-3xl font-bold font-headline text-center mb-8 text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
+                <h2 className="text-3xl font-bold font-headline text-center mb-8">
                   Here are your fresh ideas!
                 </h2>
                 <div className="space-y-4">
@@ -291,7 +291,7 @@ export default function Home() {
                           exit={{ opacity: 0 }}
                           transition={{ delay: i * 0.1 }}
                         >
-                            <Card className="p-4 flex items-center justify-between shadow-sm bg-white/90 backdrop-blur-sm rounded-2xl">
+                            <Card className="p-4 flex items-center justify-between shadow-sm rounded-2xl">
                                 <div className="h-6 bg-slate-200 rounded-md w-3/4 animate-pulse"></div>
                                 <div className="h-8 w-8 bg-slate-200 rounded-full animate-pulse"></div>
                             </Card>
@@ -305,8 +305,8 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.15, type: 'spring', stiffness: 100 }}
                         >
-                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 bg-white/90 backdrop-blur-sm rounded-2xl">
-                                <p className="flex-1 text-slate-800 text-lg">{idea}</p>
+                            <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 rounded-2xl">
+                                <p className="flex-1 text-lg">{idea}</p>
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -328,7 +328,7 @@ export default function Home() {
                   transition={{ delay: 0.5, duration: 0.5 }}
                   className="mt-8"
                 >
-                  <h3 className="text-2xl font-bold font-headline text-center mb-4 text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
+                  <h3 className="text-2xl font-bold font-headline text-center mb-4">
                     Trending Hashtags
                   </h3>
                   <div className="flex flex-wrap justify-center gap-3">
@@ -341,7 +341,7 @@ export default function Home() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer bg-sky-100/80 hover:bg-sky-200/90 transition-colors text-primary rounded-lg border-primary/20"
+                          className="text-base px-4 py-2 cursor-pointer hover:bg-sky-200/90 transition-colors text-primary rounded-lg border-primary/20"
                           onClick={() => handleCopyToClipboard(tag)}
                         >
                           <Hash className="h-4 w-4 mr-1.5" />
@@ -357,10 +357,10 @@ export default function Home() {
 
           <section className="mt-20 md:mt-32">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-4xl font-bold text-center font-headline text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_20%)]">
+              <h2 className="text-4xl font-bold text-center font-headline">
                 Why Choose Us?
               </h2>
-               <p className="mt-4 text-lg text-center text-slate-200 max-w-3xl mx-auto">
+               <p className="mt-4 text-lg text-center text-muted-foreground max-w-3xl mx-auto">
                  Everything you need to create viral content for the Pakistani audience, all in one place.
                </p>
               <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -374,15 +374,15 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.5 }}
                       transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
                     >
-                      <Card className="h-full bg-white/80 backdrop-blur-sm border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
+                      <Card className="h-full hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
                         <CardHeader className="items-center text-center">
                           <div className="p-3 bg-gradient-to-br from-primary to-accent rounded-[20px] mb-3 shadow-lg">
                             <Icon className={`h-8 w-8 text-white`} />
                           </div>
-                          <CardTitle className="text-slate-800">{feature.title}</CardTitle>
+                          <CardTitle>{feature.title}</CardTitle>
                         </CardHeader>
                         <CardContent className="text-center px-6 pb-6">
-                          <p className="text-slate-600">{feature.description}</p>
+                          <p className="text-muted-foreground">{feature.description}</p>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -394,7 +394,7 @@ export default function Home() {
         </div>
       </main>
       <footer className="py-8 mt-12">
-        <div className="container mx-auto text-center text-sm text-slate-200/80">
+        <div className="container mx-auto text-center text-sm text-muted-foreground">
           <p>&copy; {currentYear} AI Powar. Made with ❤️ in Pakistan.</p>
         </div>
       </footer>
