@@ -103,7 +103,7 @@ const CopyCheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path d="M13 22H7C5.89543 22 5 21.1046 5 20V7C5 5.89543 5.89543 5 7 5H17C18.1046 5 19 5.89543 19 7V10" stroke="#EC4899" strokeWidth="2" strokeLinecap="round"/>
         <path d="M14 17L17 20L25 12" stroke="#EC4899" strokeWidth="2" strokeLinecap="round"/>
-        <rect x="12" y="12" width="15" height="15" rx="3" stroke="#EC4899" strokeWidth="2" stroke-dasharray="4 4"/>
+        <rect x="12" y="12" width="15" height="15" rx="3" stroke="#EC4899" strokeWidth="2" strokeDasharray="4 4"/>
     </svg>
 );
 const SparklesIcon = (props: React.SVGProps<SVGSVGElement>) => (
