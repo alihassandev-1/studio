@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -9,6 +9,7 @@ import {
   generatePlatformSpecificContentIdeas,
   type GeneratePlatformSpecificContentIdeasInput,
 } from '@/ai/flows/generate-platform-specific-content-ideas';
+import { generateTrendingTopics } from '@/ai/flows/generate-trending-topics';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -24,6 +25,7 @@ import {
   Target,
   Globe,
   Wallet,
+  TrendingUp,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -158,15 +160,13 @@ function FeatureCard({ icon: Icon, title, description, index }: { icon: React.El
 export default function Home() {
   const [ideas, setIdeas] = useState<string[]>([]);
   const [hashtags, setHashtags] = useState<string[]>([]);
+  const [trendingTopics, setTrendingTopics] = useState<string[]>([]);
+  const [isTrendsLoading, setIsTrendsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedIdea, setCopiedIdea] = useState<string | null>(null);
   const { toast } = useToast();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [showResults, setShowResults] = useState(false);
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-  }, []);
 
   const {
     register,
@@ -182,6 +182,24 @@ export default function Home() {
   });
 
   const selectedPlatform = watch('platform');
+  
+  const fetchTrendingTopics = useCallback(async (platform: FormValues['platform']) => {
+    setIsTrendsLoading(true);
+    try {
+      const result = await generateTrendingTopics({ platform });
+      setTrendingTopics(result.topics);
+    } catch (error) {
+      console.error('Error fetching trending topics:', error);
+      setTrendingTopics([]); // Clear topics on error
+    } finally {
+      setIsTrendsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+    fetchTrendingTopics(selectedPlatform);
+  }, [selectedPlatform, fetchTrendingTopics]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
@@ -215,6 +233,11 @@ export default function Home() {
       title: 'Copied to clipboard!',
       description: 'You can now paste the content idea.',
     });
+  };
+
+  const handleTrendClick = (topic: string) => {
+    setValue('topic', topic, { shouldValidate: true });
+    handleSubmit(onSubmit)();
   };
 
   const features = [
@@ -310,6 +333,31 @@ export default function Home() {
                     })}
                    </div>
                    {errors.platform && <p className="text-sm text-destructive">{errors.platform.message}</p>}
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-base font-medium text-muted-foreground flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5" />
+                    Or try a trending topic for {selectedPlatform}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {isTrendsLoading ? (
+                      [...Array(4)].map((_, i) => (
+                        <div key={i} className="h-8 bg-slate-700 rounded-lg w-28 animate-pulse"></div>
+                      ))
+                    ) : (
+                      trendingTopics.map((topic, index) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="text-base px-4 py-2 cursor-pointer hover:bg-primary/20 transition-colors rounded-lg border-border"
+                          onClick={() => handleTrendClick(topic)}
+                        >
+                          {topic}
+                        </Badge>
+                      ))
+                    )}
+                  </div>
                 </div>
 
                 <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
