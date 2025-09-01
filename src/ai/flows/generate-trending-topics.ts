@@ -41,16 +41,15 @@ const prompt = ai.definePrompt({
   name: 'generateTrendingTopicsPrompt',
   input: {schema: GenerateTrendingTopicsInputSchema},
   output: {schema: GenerateTrendingTopicsOutputSchema},
-  prompt: `You are an expert in real-time social media trends in Pakistan. Your goal is to provide the most current and popular topics.
+  prompt: `You are an expert in real-time social media trends in Pakistan. Your goal is to provide hyper-current and popular topics that are buzzing right now.
 
-  Generate 4-5 trending topics for the {{platform}} platform, specifically for a Pakistani audience.
-  The current year is {{currentYear}}.
+  Generate 4-5 trending topics for the {{platform}} platform, specifically for a Pakistani audience. The current year is {{currentYear}}.
   
-  The topics should be short keywords or phrases that are currently popular *today* or *this week*. Do not provide evergreen or general topics. Focus on what is buzzing right now. Do not include hashtags (#).
+  **Crucially, the topics must be from *today* or *this week*.** Do not, under any circumstances, provide topics that were popular months or years ago, even if they were significant. Avoid evergreen or general topics. Your focus is exclusively on what is buzzing at this very moment. Do not include hashtags (#).
   
-  Examples:
-  - For YouTube: "New Government Policy", "Pakistani Drama Episode 25", "Travel Vlogs Hunza"
-  - For TikTok: "Latest Viral Dance", "New Food Spot in Lahore", "Eid Shopping Haul"
+  Examples of the *type* of timely topics to look for:
+  - For YouTube: "New Government Policy Announcement", "Pakistani Drama Episode 25 Review", "Latest Cricket Match Highlights"
+  - For TikTok: "Viral Food Challenge", "New Cafe in Karachi", "Eid Shopping Haul 2024"
 
   Do not include any introductory or concluding sentences. Only provide the list of topics.
   `,
