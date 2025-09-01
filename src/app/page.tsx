@@ -1,260 +1,45 @@
-"use client";
-
-import { useState, useEffect, useCallback } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import Link from 'next/link';
-import {
-  generatePlatformSpecificContentIdeas,
-  type GeneratePlatformSpecificContentIdeasInput,
-} from '@/ai/flows/generate-platform-specific-content-ideas';
 import { generateTrendingTopics } from '@/ai/flows/generate-trending-topics';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
-import {
-  Copy,
-  Loader2,
-  Sparkles,
-  CopyCheck,
-  Hash,
-  Search,
-  Target,
-  Globe,
-  Wallet,
-  TrendingUp,
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui/card';
+import { ContentGenerator } from './_components/content-generator';
+import { FeatureCard } from './_components/feature-card';
+import { CopyCheck, Globe, Search, Sparkles, Target, Wallet } from 'lucide-react';
 
-const BlogIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M4.5 4.5H19.5V8.5H4.5V4.5Z" fill="url(#blog-gradient)"/>
-        <path d="M4.5 10.5H14.5V12.5H4.5V10.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
-        <path d="M4.5 14.5H19.5V16.5H4.5V14.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
-        <path d="M16 10.5H19.5V12.5H16V10.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
-        <path d="M4.5 18.5H14.5V20.5H4.5V18.5Z" fill="url(#blog-gradient)" fillOpacity="0.7"/>
-        <defs>
-            <linearGradient id="blog-gradient" x1="4.5" y1="4.5" x2="19.5" y2="20.5" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#10B981"/>
-                <stop offset="1" stopColor="#3B82F6"/>
-            </linearGradient>
-        </defs>
-    </svg>
-);
-const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <defs>
-            <radialGradient id="insta-gradient" cx="0.3" cy="1.2" r="1.3">
-                <stop offset="0" stopColor="#FEDA77" />
-                <stop offset="0.1" stopColor="#F58529" />
-                <stop offset="0.3" stopColor="#DD2A7B" />
-                <stop offset="0.6" stopColor="#8134AF" />
-                <stop offset="1" stopColor="#515BD4" />
-            </radialGradient>
-        </defs>
-        <rect width="24" height="24" rx="6" fill="url(#insta-gradient)" />
-        <path d="M12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M17.5 6.51L17.51 6.499" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-);
-const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <rect width="28" height="28" rx="6" fill="black"/>
-        <path d="M19.14 7.32996C18.2 7.31996 17.26 7.32996 16.32 7.32996C16.27 8.52996 15.82 9.72996 14.93 10.59C14.04 11.48 12.83 11.9 11.63 12.04V15.2C13.06 15.16 14.49 14.88 15.78 14.37C16.25 14.17 16.69 13.9 17.1 13.62C17.11 15.89 17.09 18.16 17.12 20.43C17.08 21.55 16.63 22.66 15.85 23.51C14.77 25.04 12.89 25.24 11.16 24.3C9.74001 23.44 8.91001 21.84 8.91001 20.21C8.92001 18.57 9.68001 16.92 11.02 15.93C11.94 15.2 13.11 14.85 14.28 14.86C14.27 11.66 14.29 8.46996 14.26 5.27996L19.14 7.32996Z" fill="#FE2C55"/>
-        <path d="M19.14 7.32996L14.26 5.27996V14.86C13.09 14.85 11.92 15.2 11.00 15.93C9.66001 16.92 8.90001 18.57 8.91001 20.21C8.91001 21.84 9.74001 23.44 11.16 24.3C12.89 25.24 14.77 25.04 15.85 23.51C16.63 22.66 17.08 21.55 17.12 20.43C17.09 18.16 17.11 15.89 17.1 13.62C17.51 13.9 17.95 14.17 18.42 14.37C18.66 14.46 18.9 14.56 19.14 14.63V10.87C17.99 10.73 16.84 10.38 15.78 9.84C14.93 10.59 15.38 9.39996 14.93 10.59C15.82 9.72996 16.27 8.52996 16.32 7.32996H19.14V10.87C18.9 10.8 18.66 10.71 18.42 10.61C16.95 10.02 15.52 10.29 14.28 11.23V7.32996H16.32C17.26 7.32996 18.2 7.31996 19.14 7.32996Z" fill="#20F1ED"/>
-    </svg>
-);
-const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <rect width="24" height="24" rx="6" fill="#FF0000"/>
-        <path d="M10 15L15 12L10 9V15Z" fill="white"/>
-    </svg>
-);
-const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <rect width="24" height="24" rx="6" fill="#1877F2"/>
-        <path d="M14.5 21V13.5H17.5L18 9.5H14.5V7.5C14.5 6.47 14.5 5.5 16.5 5.5H18V2.14C17.674 2.097 16.637 2 15.426 2C12.896 2 11 3.657 11 6.7V9.5H8V13.5H11V21H14.5Z" fill="white"/>
-    </svg>
-);
-const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <rect width="24" height="24" rx="6" fill="black"/>
-        <path d="M18.244 2.25H21.552L14.325 10.51L23.054 21.75H16.388L10.395 14.093L3.678 21.75H0.369L8.097 12.91L-0.375 2.25H6.46L11.83 8.917L18.244 2.25ZM17.083 19.467H19.14L7.042 4.126H4.88L17.083 19.467Z" fill="white"/>
-    </svg>
-);
-
-const platformIcons: { [key: string]: React.ElementType } = {
-  Blog: BlogIcon,
-  Instagram: InstagramIcon,
-  TikTok: TikTokIcon,
-  YouTube: YouTubeIcon,
-  Facebook: FacebookIcon,
-  X: XIcon,
-};
-
-const platforms: GeneratePlatformSpecificContentIdeasInput['platform'][] = [
-  'Blog',
-  'Instagram',
-  'TikTok',
-  'YouTube',
-  'Facebook',
-  'X',
-];
-
-const formSchema = z.object({
-  topic: z.string().min(3, 'Please enter a topic with at least 3 characters.'),
-  platform: z.enum(platforms),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-function ResultCard({ idea, index, onCopy, isCopied }: { idea: string, index: number, onCopy: (idea: string) => void, isCopied: boolean }) {
-    return (
-        <Card className="p-4 flex items-center justify-between gap-4 group hover:shadow-lg transition-shadow duration-300 rounded-2xl fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <p className="flex-1 text-lg">{idea}</p>
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onCopy(idea)}
-                aria-label="Copy idea"
-                className="opacity-60 group-hover:opacity-100 transition-opacity"
-            >
-                {isCopied ? <CopyCheck className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5" />}
-            </Button>
-        </Card>
-    )
-}
-
-function SkeletonCard() {
-    return (
-        <Card className="p-4 flex items-center justify-between shadow-sm rounded-2xl">
-            <div className="h-6 bg-slate-700 rounded-md w-3/4 animate-pulse"></div>
-            <div className="h-8 w-8 bg-slate-700 rounded-full animate-pulse"></div>
-        </Card>
-    )
-}
-
-function FeatureCard({ icon: Icon, title, description, index }: { icon: React.ElementType, title: string, description: string, index: number }) {
-    return (
-        <div className="fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <Card className="h-full hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 rounded-2xl">
-                <CardHeader className="items-center text-center">
-                    <div className="p-3 bg-gradient-to-br from-primary to-accent rounded-[20px] mb-3 shadow-lg">
-                        <Icon className={`h-8 w-8 text-white`} />
-                    </div>
-                    <CardTitle>{title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center px-6 pb-6">
-                    <p className="text-muted-foreground">{description}</p>
-                </CardContent>
-            </Card>
-        </div>
-    )
-}
-
-
-export default function Home() {
-  const [ideas, setIdeas] = useState<string[]>([]);
-  const [hashtags, setHashtags] = useState<string[]>([]);
-  const [trendingTopics, setTrendingTopics] = useState<string[]>([]);
-  const [isTrendsLoading, setIsTrendsLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [copiedIdea, setCopiedIdea] = useState<string | null>(null);
-  const { toast } = useToast();
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [showResults, setShowResults] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    setValue,
-  } = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+async function getInitialTrendingTopics() {
+  try {
+    const topics = await generateTrendingTopics({
       platform: 'Blog',
-    },
-  });
-
-  const selectedPlatform = watch('platform');
-  
-  const fetchTrendingTopics = useCallback(async (platform: FormValues['platform']) => {
-    setIsTrendsLoading(true);
-    try {
-      const result = await generateTrendingTopics({ platform, currentYear });
-      setTrendingTopics(result.topics);
-    } catch (error) {
-      console.error('Error fetching trending topics:', error);
-      setTrendingTopics([]); // Clear topics on error
-    } finally {
-      setIsTrendsLoading(false);
-    }
-  }, [currentYear]);
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-    fetchTrendingTopics(selectedPlatform);
-  }, [selectedPlatform, fetchTrendingTopics]);
-
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    setIsLoading(true);
-    setShowResults(true);
-    setIdeas([]);
-    setHashtags([]);
-    try {
-      const result = await generatePlatformSpecificContentIdeas({
-        ...data,
-        currentYear,
-      });
-      setIdeas(result.ideas);
-      setHashtags(result.hashtags || []);
-    } catch (error) {
-      console.error('Error generating ideas:', error);
-      toast({
-        title: 'Error generating ideas',
-        description: 'There was an issue connecting to the AI. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCopyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedIdea(text);
-    setTimeout(() => setCopiedIdea(null), 2000);
-    toast({
-      title: 'Copied to clipboard!',
-      description: 'You can now paste the content idea.',
+      currentYear: new Date().getFullYear(),
     });
-  };
+    return topics.topics;
+  } catch (error) {
+    console.error('Failed to fetch initial trending topics:', error);
+    return [];
+  }
+}
 
-  const handleTrendClick = (topic: string) => {
-    setValue('topic', topic, { shouldValidate: true });
-    handleSubmit(onSubmit)();
-  };
+export default async function Home() {
+  const initialTrendingTopics = await getInitialTrendingTopics();
+  const currentYear = new Date().getFullYear();
 
   const features = [
     {
       icon: Search,
       title: 'Topic-Based Generation',
-      description: 'Enter any keyword and get creative, relevant content ideas instantly tailored to your niche.',
+      description:
+        'Enter any keyword and get creative, relevant content ideas instantly tailored to your niche.',
     },
     {
       icon: Target,
       title: 'Platform-Specific Ideas',
-      description: 'Get optimized content ideas for Blog, Instagram, TikTok, YouTube, and Facebook that actually work.',
+      description:
+        'Get optimized content ideas for Blog, Instagram, TikTok, YouTube, and Facebook that actually work.',
     },
     {
       icon: Globe,
       title: 'Localized for Pakistan',
-      description: 'Content ideas that resonate with Pakistani culture, trends, and local context for maximum engagement.',
+      description:
+        'Content ideas that resonate with Pakistani culture, trends, and local context for maximum engagement.',
     },
     {
       icon: Wallet,
@@ -270,7 +55,7 @@ export default function Home() {
       icon: Sparkles,
       title: 'AI-Powered',
       description: 'Advanced AI algorithms ensure fresh, unique, and engaging content ideas every single time.',
-    }
+    },
   ];
 
   return (
@@ -284,160 +69,37 @@ export default function Home() {
       </header>
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8 md:py-16">
-          <div
-            className="max-w-4xl mx-auto text-center initial-fade-in"
-          >
+          <Card className="max-w-4xl mx-auto text-center bg-transparent border-none shadow-none">
             <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-foreground leading-tight">
               Never Run Out of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Content Ideas</span> Again
             </h1>
             <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Stop overthinking, start creating! Generate viral content ideas for any platform in seconds.
             </p>
-          </div>
-
-          <Card className="max-w-3xl mx-auto mt-12 shadow-lg rounded-2xl overflow-hidden bg-card">
-            <CardContent className="p-6 md:p-8">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="topic" className="text-base font-medium">Enter a topic or keyword</Label>
-                  <Input
-                    id="topic"
-                    placeholder="e.g., 'Street Food in Lahore'"
-                    {...register('topic')}
-                    className="text-base py-6 rounded-lg"
-                  />
-                  {errors.topic && <p className="text-sm text-destructive">{errors.topic.message}</p>}
-                </div>
-
-                <div className="space-y-3">
-                   <Label className="text-base font-medium">Select a platform</Label>
-                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {platforms.map((platform) => {
-                      const Icon = platformIcons[platform];
-                      return (
-                        <Button
-                          key={platform}
-                          type="button"
-                          variant={selectedPlatform === platform ? 'default' : 'outline'}
-                          onClick={() => setValue('platform', platform, { shouldValidate: true })}
-                          className={`transition-all duration-300 ease-in-out h-14 text-base justify-start pl-4 rounded-lg
-                            ${selectedPlatform === platform 
-                              ? 'ring-2 ring-primary/80 scale-105 shadow-lg bg-gradient-to-r from-primary to-accent text-primary-foreground' 
-                              : 'hover:bg-secondary'
-                            }`}
-                        >
-                          <Icon className="h-6 w-6 mr-3" />
-                          <span className="font-semibold">{platform}</span>
-                        </Button>
-                      );
-                    })}
-                   </div>
-                   {errors.platform && <p className="text-sm text-destructive">{errors.platform.message}</p>}
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-base font-medium text-muted-foreground flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5" />
-                    Or try a trending topic for {selectedPlatform}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {isTrendsLoading ? (
-                      [...Array(4)].map((_, i) => (
-                        <div key={i} className="h-8 bg-slate-700 rounded-lg w-28 animate-pulse"></div>
-                      ))
-                    ) : (
-                      trendingTopics.map((topic, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer hover:bg-primary/20 transition-colors rounded-lg border-border"
-                          onClick={() => handleTrendClick(topic)}
-                        >
-                          {topic}
-                        </Badge>
-                      ))
-                    )}
-                  </div>
-                </div>
-
-                <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
-                  {isLoading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : <Sparkles className="mr-2 h-6 w-6" />}
-                  Generate Ideas
-                </Button>
-              </form>
-            </CardContent>
           </Card>
 
-          {showResults && (
-            <div
-              className="max-w-3xl mx-auto mt-12"
-            >
-                <h2 className="text-3xl font-bold font-headline text-center mb-8">
-                  Here are your fresh ideas!
-                </h2>
-                <div className="space-y-4">
-                  {isLoading &&
-                      [...Array(3)].map((_, i) => (
-                        <SkeletonCard key={i} />
-                      ))}
-
-                    {!isLoading && ideas.map((idea, index) => (
-                        <ResultCard 
-                            key={`${idea}-${index}`}
-                            idea={idea}
-                            index={index}
-                            onCopy={handleCopyToClipboard}
-                            isCopied={copiedIdea === idea}
-                        />
-                    ))}
-                </div>
-                {hashtags.length > 0 && !isLoading && (
-                <div
-                  className="mt-8 fade-in-up"
-                >
-                  <h3 className="text-2xl font-bold font-headline text-center mb-4">
-                    Trending Hashtags
-                  </h3>
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {hashtags.map((tag, index) => (
-                      <div
-                        key={tag}
-                        className="fade-in-up"
-                        style={{ animationDelay: `${index * 0.1}s` }}
-                      >
-                        <Badge
-                          variant="secondary"
-                          className="text-base px-4 py-2 cursor-pointer hover:bg-secondary/80 transition-colors rounded-lg border-border"
-                          onClick={() => handleCopyToClipboard(tag)}
-                        >
-                          <Hash className="h-4 w-4 mr-1.5" />
-                          {tag.replace(/^#/, '')}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+          <ContentGenerator
+            initialTrendingTopics={initialTrendingTopics}
+            currentYear={currentYear}
+          />
 
           <section className="mt-20 md:mt-32">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-4xl font-bold text-center font-headline">
                 Why Choose Us?
               </h2>
-               <p className="mt-4 text-lg text-center text-muted-foreground max-w-3xl mx-auto">
-                 Everything you need to create viral content for the Pakistani audience, all in one place.
-               </p>
+              <p className="mt-4 text-lg text-center text-muted-foreground max-w-3xl mx-auto">
+                Everything you need to create viral content for the Pakistani audience, all in one place.
+              </p>
               <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {features.map((feature, index) => (
-                    <FeatureCard 
-                        key={feature.title}
-                        icon={feature.icon}
-                        title={feature.title}
-                        description={feature.description}
-                        index={index}
-                    />
+                  <FeatureCard
+                    key={feature.title}
+                    icon={feature.icon}
+                    title={feature.title}
+                    description={feature.description}
+                    index={index}
+                  />
                 ))}
               </div>
             </div>
