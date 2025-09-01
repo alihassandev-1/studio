@@ -1,4 +1,4 @@
-# **App Name**: Pakistani Content Compass
+# **App Name**: AI Powar
 
 ## Core Features:
 
