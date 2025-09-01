@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import { CookieConsent } from '@/components/ui/cookie-consent';
 
 export const metadata: Metadata = {
   title: 'AI Powar - Free AI Content Idea Generator for Pakistan',
@@ -36,6 +37,7 @@ export default function RootLayout({
           {children}
         </div>
         <Toaster />
+        <CookieConsent />
       </body>
     </html>
   );
