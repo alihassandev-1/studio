@@ -186,7 +186,7 @@ export default function Home() {
   const fetchTrendingTopics = useCallback(async (platform: FormValues['platform']) => {
     setIsTrendsLoading(true);
     try {
-      const result = await generateTrendingTopics({ platform });
+      const result = await generateTrendingTopics({ platform, currentYear });
       setTrendingTopics(result.topics);
     } catch (error) {
       console.error('Error fetching trending topics:', error);
@@ -194,7 +194,7 @@ export default function Home() {
     } finally {
       setIsTrendsLoading(false);
     }
-  }, []);
+  }, [currentYear]);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
