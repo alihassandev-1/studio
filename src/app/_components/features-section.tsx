@@ -1,7 +1,7 @@
 "use client";
 
 import { FeatureCard } from './feature-card';
-import { CopyCheck, Globe, Search, Sparkles, Target, Wallet, Share2 } from 'lucide-react';
+import { CopyCheck, Globe, Search, Sparkles, Target, Wallet } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function FeaturesSection() {
@@ -37,32 +37,9 @@ export function FeaturesSection() {
           description: 'Easily copy your favorite ideas to your clipboard for quick sharing and planning.',
         },
         {
-          icon: Share2,
-          title: 'Share with Friends',
-          description: 'Love our tool? Share it with your friends and help them create amazing content too!',
-          onClick: async () => {
-            const shareUrl = 'https://aipowar.com';
-            const shareTitle = 'AI Powar - Free AI Content Idea Generator for Pakistan';
-            const shareText = 'Check out this awesome AI tool for generating content ideas for the Pakistani audience!';
-
-            if (navigator.share) {
-              try {
-                await navigator.share({
-                  title: shareTitle,
-                  text: shareText,
-                  url: shareUrl,
-                });
-              } catch (error) {
-                console.error('Error sharing:', error);
-              }
-            } else {
-              navigator.clipboard.writeText(shareUrl);
-              toast({
-                title: 'Link Copied!',
-                description: 'The link has been copied to your clipboard.',
-              });
-            }
-          }
+          icon: Sparkles,
+          title: 'Trending Topics',
+          description: 'Stay ahead of the curve by using real-time trending topics for any platform to inspire your content.',
         },
       ];
       
@@ -83,7 +60,6 @@ export function FeaturesSection() {
               title={feature.title}
               description={feature.description}
               index={index}
-              onClick={feature.onClick}
             />
           ))}
         </div>

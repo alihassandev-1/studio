@@ -15,7 +15,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Copy, Loader2, Sparkles, CopyCheck, Hash, TrendingUp } from 'lucide-react';
+import { Copy, Loader2, Sparkles, CopyCheck, Hash, TrendingUp, Share2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { platformIcons } from './platform-icons';
 
@@ -153,6 +153,30 @@ export function ContentGenerator({ initialTrendingTopics, currentYear }: { initi
     setValue('topic', topic, { shouldValidate: true });
     handleSubmit(onSubmit)();
   };
+  
+  const handleShare = async () => {
+    const shareUrl = 'https://aipowar.com';
+    const shareTitle = 'AI Powar - Free AI Content Idea Generator for Pakistan';
+    const shareText = 'Check out this awesome AI tool for generating content ideas for the Pakistani audience!';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: 'Link Copied!',
+        description: 'The link has been copied to your clipboard.',
+      });
+    }
+  }
 
   return (
     <>
@@ -222,10 +246,29 @@ export function ContentGenerator({ initialTrendingTopics, currentYear }: { initi
                 </div>
               </div>
 
-              <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
-                {isLoading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : <Sparkles className="mr-2 h-6 w-6" />}
-                Generate Ideas
-              </Button>
+              <div className="flex flex-col gap-4">
+                <Button type="submit" disabled={isLoading} size="lg" className="w-full text-lg font-bold rounded-lg h-14 bg-gradient-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
+                  {isLoading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : <Sparkles className="mr-2 h-6 w-6" />}
+                  Generate Ideas
+                </Button>
+                
+                <motion.div
+                  className="relative group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-lg blur opacity-50 group-hover:opacity-100 transition duration-300"></div>
+                  <Button
+                    type="button"
+                    onClick={handleShare}
+                    className="relative w-full h-14 text-lg font-bold rounded-lg bg-card/80 backdrop-blur-xl hover:bg-card/70 transition-colors duration-300"
+                  >
+                    <Share2 className="mr-2 h-6 w-6" />
+                    Share with Friends
+                  </Button>
+                </motion.div>
+
+              </div>
             </form>
           </CardContent>
         </Card>
